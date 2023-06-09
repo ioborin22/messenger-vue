@@ -1,10 +1,16 @@
 <template>
-$END$
+  <div>
+    Hello
+  </div>
 </template>
 
 <script>
+import UserMessage from "@/components/UserMessages";
+
 export default {
-name: "Messages"
+  components: {
+    UserMessage
+  },
 }
 </script>
 
