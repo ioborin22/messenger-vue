@@ -8,11 +8,11 @@
         <div class="contact-details">
           <div class="nickname-date">
             <h3 class="nickname">{{ contact.nickname }}</h3>
-            <span class="date">{{ contact.date }}</span>
+            <span class="date">{{ messages.date }}</span>
           </div>
           <div class="message-details">
-            <p class="last-message">{{ contact.lastMessage }}</p>
-            <span class="message-counter" v-if="contact.count !== 0">{{ contact.count }}</span>
+            <p class="last-message">{{ messages.last_message }}</p>
+            <span class="message-counter" v-if="messages.count !== 0">{{ messages.count }}</span>
           </div>
         </div>
       </router-link>
@@ -27,6 +27,7 @@ export default {
   data() {
     return {
       contacts: [],
+      messages: [],
       apiUrl: 'https://ioborin22.com/api/contacts/1/added'
     }
   },
