@@ -1,9 +1,9 @@
 <template>
   <div class="contacts-list-wrapper">
-    <div class="contacts-list" v-for="contact in contacts" :key="contact.id">
-      <router-link :to="`/messages/${contact.id}`" class="contact">
-        <div :class="['avatar', { 'online': contact.online === 1 }, { 'verified': contact.verified === 1 }]">
-          <img src="@/assets/woman.png" alt="Profile Picture">
+    <div class="contacts-list" v-for="contact in contacts" :key="contact.user_id">
+      <router-link :to="`/messages/${contact.contact_id}`" class="contact">
+        <div :class="['avatar', { 'online': contact.online === 1 }, { 'verified': contact.email_verified_at !== NULL }]">
+          <img :src="contact.avatar" alt="Profile Picture">
         </div>
         <div class="contact-details">
           <div class="nickname-date">
@@ -11,7 +11,7 @@
             <span class="date">{{ contact.date }}</span>
           </div>
           <div class="message-details">
-            <p class="last-message">{{ contact.last_message }}</p>
+            <p class="last-message">{{ contact.lastMessage }}</p>
             <span class="message-counter" v-if="contact.count !== 0">{{ contact.count }}</span>
           </div>
         </div>
@@ -21,157 +21,32 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
-      contacts: [
-        {
-          id: 1,
-          nickname: 'User1',
-          online: 1,
-          last_message: 'I\'ve spent a lot of time on BeenVerified recently.',
-          date: 'May 17',
-          count: 1,
-          verified: 1
-        },
-        {
-          id: 2,
-          nickname: 'User2',
-          online: 0,
-          last_message: 'McCarthy told reporters that negotiations are paused until President Joe Biden returns from his trip abroad as he left the Capitol this evening.',
-          date: 'May 17',
-          count: 0,
-          verified: 0
-        },
-        {
-          id: 3,
-          nickname: 'User3',
-          online: 1,
-          last_message: 'Hello. Property ensures the SVG image covers the entire area of the before pseudo-element.',
-          date: 'May 16',
-          count: 0,
-          verified: 0
-        },
-        {
-          id: 4,
-          nickname: 'User4',
-          online: 0,
-          last_message: 'Yesterday was good to get this fish from your track',
-          date: 'May 15',
-          count: 0,
-          verified: 1
-        },
-        {
-          id: 5,
-          nickname: 'User5',
-          online: 0,
-          last_message: 'At the time several strippers complained about being terrified by the Morant situation.',
-          date: 'May 13',
-          count: 0,
-          verified: 0
-        },
-        {
-          id: 6,
-          nickname: 'User6',
-          online: 0,
-          last_message: 'American actress Loni Anderson rose to fame during the 1970s and 1980s.',
-          date: 'May 11',
-          count: 0,
-          verified: 0
-        },
-        {
-          id: 7,
-          nickname: 'User7',
-          online: 1,
-          last_message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-          date: 'May 10',
-          count: 2,
-          verified: 1
-        },
-        {
-          id: 8,
-          nickname: 'User8',
-          online: 0,
-          last_message: 'Ut feugiat metus sit amet ipsum eleifend, eu efficitur massa condimentum.',
-          date: 'May 9',
-          count: 0,
-          verified: 1
-        },
-        {
-          id: 9,
-          nickname: 'User9',
-          online: 1,
-          last_message: 'Nullam vehicula sem id dolor consequat, et dapibus velit iaculis.',
-          date: 'May 8',
-          count: 0,
-          verified: 0
-        },
-        {
-          id: 10,
-          nickname: 'User10',
-          online: 0,
-          last_message: 'Phasellus convallis felis non magna ultricies, in tristique dolor rhoncus.',
-          date: 'May 7',
-          count: 3,
-          verified: 0
-        },
-        {
-          id: 11,
-          nickname: 'User11',
-          online: 1,
-          last_message: 'Vestibulum mattis nisl sed leo consectetur, non pellentesque dolor egestas.',
-          date: 'May 6',
-          count: 0,
-          verified: 1
-        },
-        {
-          id: 12,
-          nickname: 'User12',
-          online: 0,
-          last_message: 'Aenean vitae nunc at orci consectetur tincidunt ut vitae metus.',
-          date: 'May 5',
-          count: 0,
-          verified: 0
-        },
-        {
-          id: 13,
-          nickname: 'User13',
-          online: 1,
-          last_message: 'Pellentesque auctor quam id ipsum finibus, vitae pharetra elit eleifend.',
-          date: 'May 4',
-          count: 0,
-          verified: 0
-        },
-        {
-          id: 14,
-          nickname: 'User14',
-          online: 1,
-          last_message: 'Pellentesque auctor quam id ipsum finibus, vitae pharetra elit eleifend.',
-          date: 'May 4',
-          count: 0,
-          verified: 0
-        },
-        {
-          id: 15,
-          nickname: 'User15',
-          online: 1,
-          last_message: 'Pellentesque auctor quam id ipsum finibus, vitae pharetra elit eleifend.',
-          date: 'May 4',
-          count: 0,
-          verified: 0
-        },
-        {
-          id: 16,
-          nickname: 'User16',
-          online: 1,
-          last_message: 'Pellentesque auctor quam id ipsum finibus, vitae pharetra elit eleifend.',
-          date: 'May 4',
-          count: 0,
-          verified: 0
-        },
-      ]
+      contacts: [],
+      apiUrl: 'https://ioborin22.com/api/contacts/1/added'
     }
   },
+  mounted() {
+    // Make an API call to fetch the contacts data
+    this.fetchContacts();
+  },
+  methods: {
+    fetchContacts() {
+      // Use axios to fetch data from the API
+      axios.get(this.apiUrl)
+          .then(response => {
+            // Store the retrieved contacts data in the contacts array
+            this.contacts = response.data;
+          })
+          .catch(error => {
+            console.log(error);
+          });
+    }
+  }
 }
 </script>
 

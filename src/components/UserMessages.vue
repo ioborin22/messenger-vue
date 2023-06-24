@@ -5,11 +5,10 @@
 </template>
 
 <script>
-import UserMessage from "@/components/UserMessages";
 
 export default {
   components: {
-    UserMessage
+
   },
 }
 </script>
