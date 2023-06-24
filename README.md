@@ -1,9 +1,6 @@
 # vue-messanger
 
-
-
-
-![Chat Conversation Icon](https://raw.githubusercontent.com/ioborin22/messenger-vue/99d6fac28500234d37a4d2acd968177d56eb0e04/public/messenger-vue/chat-conversation-svgrepo-com.svg | width=32 height=32)
+![Chat Conversation Icon](https://raw.githubusercontent.com/ioborin22/messenger-vue/99d6fac28500234d37a4d2acd968177d56eb0e04/public/messenger-vue/chat-conversation-svgrepo-com.svg){ width=32 height=32 }
 
 ## Project setup
 ```
