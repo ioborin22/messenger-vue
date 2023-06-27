@@ -1,4 +1,4 @@
-# General Web Messenger Template
+# Fundamental Messenger
 
 This project is a general web messenger template built using Vue.js. It provides a foundation for creating a web-based messaging application with features like contact list, message history, and real-time communication.
 
