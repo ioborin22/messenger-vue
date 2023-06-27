@@ -1,7 +1,7 @@
 # Fundamental Messenger
 
 
-![Fundamental Messenger]()
+![Fundamental Messenger](https://raw.githubusercontent.com/ioborin22/messenger-vue/bc7ec3a8ee562341fd3c6a518e1b6735434213cf/public/messenger-vue/vue-fundamental-messenger.svg)
 This project is a general web messenger template built using Vue.js. It provides a foundation for creating a web-based messaging application with features like contact list, message history, and real-time communication.
 
 ## Project setup
