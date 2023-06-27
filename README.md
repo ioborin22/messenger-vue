@@ -29,3 +29,6 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### Customize Configuration
+Feel free to modify and extend this template to suit your specific messenger application requirements. Happy coding!
