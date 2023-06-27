@@ -12,7 +12,7 @@
           </div>
           <div class="message-details">
             <p class="last-message">{{ getLastMessageText(contact.contact_id) }}</p>
-            <span class="message-counter">{{ getLastMessageCount(contact.contact_id) }}</span>
+            <span class="message-counter" v-if="getLastMessageCount(contact.contact_id) !== 0">{{ getLastMessageCount(contact.contact_id) }}</span>
           </div>
         </div>
       </router-link>
@@ -80,7 +80,7 @@ export default {
 
     getLastMessageCount(contactId) {
       // Filter the messages for the specified contactId and flag equal to 0
-      const contactMessages = this.messages.filter(message => (message.receiver_id === contactId || message.sender_id === contactId) && message.flag === 0);
+      const contactMessages = this.messages.filter(message => (message.sender_id === contactId) && message.flag === 0);
       return contactMessages.length;
     }
 
