@@ -62,32 +62,50 @@ export default {
     },
     getLastMessageDate(contactId) {
       // Filter the messages for the specified contactId
-      const contactMessages = this.messages.filter(message => message.receiver_id === contactId || message.sender_id === contactId);
-      const lastMessage = contactMessages.length > 0 ? contactMessages.reduce((prev, current) => (prev.created_at > current.created_at ? prev : current)) : null;
+      const contactMessages = this.messages.filter(
+          message => message.receiver_id === contactId || message.sender_id === contactId
+      );
+
+      // Find the last message based on the creation date
+      const lastMessage = contactMessages.length > 0
+          ? contactMessages.reduce((prev, current) => (prev.created_at > current.created_at ? prev : current))
+          : null;
+
+      // Format the date in the desired format
       if (lastMessage) {
         const date = new Date(lastMessage.created_at);
         return date.toLocaleDateString('en-US');
       }
+
       return '';
     },
 
     getLastMessageText(contactId) {
       // Filter the messages for the specified contactId
-      const contactMessages = this.messages.filter(message => message.receiver_id === contactId || message.sender_id === contactId);
-      const lastMessage = contactMessages.length > 0 ? contactMessages.reduce((prev, current) => (prev.created_at > current.created_at ? prev : current)) : null;
+      const contactMessages = this.messages.filter(
+          message => message.receiver_id === contactId || message.sender_id === contactId
+      );
+
+      // Find the last message based on the creation date
+      const lastMessage = contactMessages.length > 0
+          ? contactMessages.reduce((prev, current) => (prev.created_at > current.created_at ? prev : current))
+          : null;
+
       return lastMessage ? lastMessage.text_message : '';
     },
 
     getLastMessageCount(contactId) {
       // Filter the messages for the specified contactId and flag equal to 0
-      const contactMessages = this.messages.filter(message => (message.sender_id === contactId) && message.flag === 0);
+      const contactMessages = this.messages.filter(
+          message => message.sender_id === contactId && message.flag === 0
+      );
+
       return contactMessages.length;
     }
 
   }
 }
 </script>
-
 
 <style>
 
@@ -200,7 +218,7 @@ html, body {
 .message-counter {
   padding: 2px 6px;
   font-size: 12px;
-  background-color: #e74c3c;
+  background-color: #2e7df6;
   color: #fff;
   border-radius: 10px;
   margin-left: 5px;
