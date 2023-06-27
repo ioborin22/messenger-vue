@@ -2,17 +2,17 @@
   <div class="contacts-list-wrapper">
     <div class="contacts-list" v-for="contact in contacts" :key="contact.user_id">
       <router-link :to="`/messages/${contact.contact_id}`" class="contact">
-        <div :class="['avatar', { 'online': contact.online === 1 }, { 'verified': contact.email_verified_at !== NULL }]">
+        <div :class="['avatar', { 'online': contact.online === 1 }, { 'verified': contact.email_verified_at !== null }]">
           <img :src="contact.avatar" alt="Profile Picture">
         </div>
         <div class="contact-details">
           <div class="nickname-date">
             <h3 class="nickname">{{ contact.nickname }}</h3>
-            <span class="date">{{ messages.date }}</span>
+            <span class="date">{{ getLastMessageDate(contact.contact_id) }}</span>
           </div>
           <div class="message-details">
-            <p class="last-message">{{ messages.last_message }}</p>
-            <span class="message-counter" v-if="messages.count !== 0">{{ messages.count }}</span>
+            <p class="last-message">{{ getLastMessageText(contact.contact_id) }}</p>
+            <span class="message-counter">{{ getLastMessageCount(contact.contact_id) }}</span>
           </div>
         </div>
       </router-link>
@@ -28,12 +28,14 @@ export default {
     return {
       contacts: [],
       messages: [],
-      apiUrl: 'https://ioborin22.com/api/contacts/1/added'
+      apiUrl: 'https://ioborin22.com/api/contacts/1/added',
+      apiMessages: 'https://ioborin22.com/api/messages/1'
     }
   },
   mounted() {
-    // Make an API call to fetch the contacts data
+    // Make API calls to fetch the contacts and messages data
     this.fetchContacts();
+    this.fetchMessages();
   },
   methods: {
     fetchContacts() {
@@ -46,10 +48,42 @@ export default {
           .catch(error => {
             console.log(error);
           });
+    },
+    fetchMessages() {
+      // Use axios to fetch data from the API
+      axios.get(this.apiMessages)
+          .then(response => {
+            // Store the retrieved messages data in the messages array
+            this.messages = response.data;
+          })
+          .catch(error => {
+            console.log(error);
+          });
+    },
+    getLastMessageDate(contactId) {
+      // Filter the messages for the specified contactId
+      const contactMessages = this.messages.filter(message => message.receiver_id === contactId || message.sender_id === contactId);
+      const lastMessage = contactMessages.length > 0 ? contactMessages.reduce((prev, current) => (prev.created_at > current.created_at ? prev : current)) : null;
+      return lastMessage ? lastMessage.created_at : '';
+    },
+
+    getLastMessageText(contactId) {
+      // Filter the messages for the specified contactId
+      const contactMessages = this.messages.filter(message => message.receiver_id === contactId || message.sender_id === contactId);
+      const lastMessage = contactMessages.length > 0 ? contactMessages.reduce((prev, current) => (prev.created_at > current.created_at ? prev : current)) : null;
+      return lastMessage ? lastMessage.text_message : '';
+    },
+
+    getLastMessageCount(contactId) {
+      // Filter the messages for the specified contactId and flag equal to 0
+      const contactMessages = this.messages.filter(message => (message.receiver_id === contactId || message.sender_id === contactId) && message.flag === 0);
+      return contactMessages.length;
     }
+
   }
 }
 </script>
+
 
 <style>
 
