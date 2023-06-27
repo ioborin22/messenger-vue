@@ -33,8 +33,25 @@ export default {
   methods: {
     selectTab(tab) {
       this.selectedTab = tab;
+      switch (tab) {
+        case 'contacts':
+          this.$router.push('/contacts');
+          break;
+        case 'online':
+          this.$router.push('/online');
+          break;
+        case 'search':
+          this.$router.push('/search');
+          break;
+        case 'profile':
+          this.$router.push('/profile');
+          break;
+        default:
+          break;
+      }
     }
   }
+
 };
 </script>
 

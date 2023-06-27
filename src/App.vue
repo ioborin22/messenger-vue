@@ -1,19 +1,18 @@
 <template>
   <div class="app">
-    <contact-list/>
     <bottom-menu/>
+    <router-view></router-view> <!-- Add this line -->
   </div>
 </template>
 
 <script>
-import ContactList from "@/components/ContactList";
 import BottomMenu from "@/components/BottomMenu";
 
 export default {
   components: {
-    BottomMenu, ContactList
-  },
-}
+    BottomMenu,
+  }
+};
 </script>
 
 <style>
