@@ -64,7 +64,11 @@ export default {
       // Filter the messages for the specified contactId
       const contactMessages = this.messages.filter(message => message.receiver_id === contactId || message.sender_id === contactId);
       const lastMessage = contactMessages.length > 0 ? contactMessages.reduce((prev, current) => (prev.created_at > current.created_at ? prev : current)) : null;
-      return lastMessage ? lastMessage.created_at : '';
+      if (lastMessage) {
+        const date = new Date(lastMessage.created_at);
+        return date.toLocaleDateString('en-US');
+      }
+      return '';
     },
 
     getLastMessageText(contactId) {
