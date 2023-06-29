@@ -66,6 +66,7 @@ export default {
   left: 0;
   width: 100%;
   border-top: #b2b2b2 solid 1px;
+  max-width: 33.33%
 }
 
 .menu-item {

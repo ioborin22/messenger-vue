@@ -1,7 +1,7 @@
 <template>
   <div class="contacts-list-wrapper">
-    <div class="contacts-list" v-for="contact in contacts" :key="contact.user_id">
-      <router-link :to="`/messages/${contact.contact_id}`" class="contact">
+    <div class="contacts-list">
+      <div v-for="contact in contacts" :key="contact.user_id" class="contact" @click="selectContact(contact)">
         <div :class="['avatar', { 'online': contact.online === 1 }, { 'verified': contact.email_verified_at !== null }]">
           <img :src="contact.avatar" alt="Profile Picture">
         </div>
@@ -15,7 +15,7 @@
             <span class="message-counter" v-if="getLastMessageCount(contact.contact_id) !== 0">{{ getLastMessageCount(contact.contact_id) }}</span>
           </div>
         </div>
-      </router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -38,6 +38,10 @@ export default {
     this.fetchMessages();
   },
   methods: {
+    selectContact(contact) {
+      // Emit a custom event to notify the parent component
+      this.$emit('contact-selected', contact);
+    },
     fetchContacts() {
       // Use axios to fetch data from the API
       axios.get(this.apiUrl)
@@ -136,9 +140,7 @@ html, body {
 }
 
 .contacts-list {
-  max-width: 400px;
-  margin: 0 auto;
-
+  max-width: 33.33%
 }
 
 .contact {
@@ -149,11 +151,12 @@ html, body {
   color: inherit;
   padding-bottom: 8px;
   border-bottom: 1px solid #c8c8c8;
+  cursor: pointer;
 }
 
 .avatar img {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
 }
 
@@ -180,6 +183,7 @@ html, body {
 .contact-details {
   margin-left: 10px;
   flex-grow: 1;
+
 }
 
 .nickname-date {
