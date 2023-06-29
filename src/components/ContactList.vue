@@ -140,7 +140,7 @@ html, body {
 }
 
 .contacts-list {
-  max-width: 33.33%
+
 }
 
 .contact {

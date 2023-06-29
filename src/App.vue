@@ -1,7 +1,11 @@
 <template>
   <div class="app">
-    <contact-list @contact-selected="handleContactSelected" />
-    <user-messages v-if="selectedContact" :selectedContact="selectedContact" />
+    <div class="contact-list">
+      <contact-list @contact-selected="handleContactSelected" />
+    </div>
+    <div class="user-messages">
+      <user-messages v-if="selectedContact" :selectedContact="selectedContact" />
+    </div>
     <bottom-menu />
   </div>
 </template>
@@ -31,3 +35,18 @@ export default {
   },
 };
 </script>
+
+<style>
+.app {
+  display: flex;
+  flex-direction: row;
+}
+
+.contact-list {
+  flex: 1;
+}
+
+.user-messages {
+  flex: 2;
+}
+</style>
