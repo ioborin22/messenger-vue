@@ -2,7 +2,7 @@
   <div>
     <ul>
       <li v-for="message in messages" :key="message.id">
-        {{ message.text_message }} = {{ message.sender_id }}
+        {{ message.text_message }}
       </li>
     </ul>
   </div>
@@ -14,7 +14,7 @@ import axios from "axios";
 export default {
   props: {
     selectedContact: {
-      type: Object,
+      type: Number,
       required: true,
     },
   },
@@ -22,12 +22,19 @@ export default {
   data() {
     return {
       messages: [],
-      apiMessages: "https://ioborin22.com/api/messages/1/2",
+      apiMessages: `https://ioborin22.com/api/messages/1/${this.selectedContact.contact_id}`,
     };
   },
 
   mounted() {
     this.fetchMessages();
+  },
+
+  watch: {
+    selectedContact() {
+      this.apiMessages = `https://ioborin22.com/api/messages/1/${this.selectedContact.contact_id}`;
+      this.fetchMessages();
+    },
   },
 
   methods: {
@@ -46,5 +53,4 @@ export default {
 </script>
 
 <style scoped>
-/* Add any desired styles for the component */
 </style>

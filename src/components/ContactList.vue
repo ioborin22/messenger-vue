@@ -1,7 +1,7 @@
 <template>
   <div class="contacts-list-wrapper">
     <div class="contacts-list">
-      <div v-for="contact in contacts" :key="contact.user_id" class="contact" @click="selectContact(contact)">
+      <div v-for="contact in contacts" :key="contact.user_id" class="contact" @click="selectedContact(contact)">
         <div :class="['avatar', { 'online': contact.online === 1 }, { 'verified': contact.email_verified_at !== null }]">
           <img :src="contact.avatar" alt="Profile Picture">
         </div>
@@ -28,7 +28,7 @@ export default {
     return {
       contacts: [],
       messages: [],
-      apiUrl: 'https://ioborin22.com/api/contacts/1/added',
+      apiContacts: 'https://ioborin22.com/api/contacts/1/added',
       apiMessages: 'https://ioborin22.com/api/messages/1'
     }
   },
@@ -38,13 +38,13 @@ export default {
     this.fetchMessages();
   },
   methods: {
-    selectContact(contact) {
+    selectedContact(contact) {
       // Emit a custom event to notify the parent component
       this.$emit('contact-selected', contact);
     },
     fetchContacts() {
       // Use axios to fetch data from the API
-      axios.get(this.apiUrl)
+      axios.get(this.apiContacts)
           .then(response => {
             // Store the retrieved contacts data in the contacts array
             this.contacts = response.data;

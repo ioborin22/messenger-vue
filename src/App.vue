@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <contact-list @contact-selected="handleContactSelected" />
-    <user-messages v-if="selectedContact" :sender="selectedContact.sender" :receiver="selectedContact.receiver" />
+    <user-messages v-if="selectedContact" :selectedContact="selectedContact" />
     <bottom-menu />
   </div>
 </template>
